@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body id="body">
+        <style>
+            .thumb {
+                height: 100px;
+            }
+        </style>
+        
+        <form id="frm1" action="/action_page.php">
+            URL: <input type="text" name="fURL" id="fURL" size="70" value = "http://www.example.com/[001-123].jpg"><br>
+            <input type="button" value="Submit" onclick="myFunction()">
+        </form>
+
+        <script>
+            function myFunction(){
+
+                //parse URL with one set of numbers like [001-123]
+                var fURL = document.getElementById("fURL").value;
+                var indexOpen = fURL.indexOf('[');
+                var indexClose = fURL.indexOf(']');
+                var indexDash = fURL.indexOf('-', indexOpen);
+                var fURL1 = fURL.substring(0,indexOpen);
+                var int1 = fURL.substring(indexOpen + 1, indexDash);
+                var intLength = int1.length;
+                int1 = parseInt(int1, 10);
+                var int2 = parseInt(fURL.substring(indexDash + 1, indexClose), 10);
+                var fURL2 = fURL.substring(indexClose + 1, );
+
+                //build page with thumbnails
+                var imageParent = document.getElementById("body");
+                var i;
+                for (i = int1; i <= int2; i++) {
+                    var myInt = i.toString();
+                    while (myInt.length < intLength){
+                        myInt = "0" + myInt;
+                    }
+                    var image = document.createElement("img");
+                    image.className = "thumb";
+                    image.src = fURL1 + myInt + fURL2;
+                    imageParent.appendChild(image);
+                    image.onclick = function(){$(this).toggleClass("thumb")};
+                }
+            }
+        </script>
+    </body>
+</html>
